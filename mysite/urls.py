@@ -16,12 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from movies.views import MovieView
+from movies.views import MovieView, ActionMovieView, ComedyMovieView
+from django.conf.urls.static import static
+from django.conf import settings
 
-router = routers.DefaultRouter()
+# router = routers.DefaultRouter()
+# router.register('movies', MovieView)
+router = routers.SimpleRouter()
 router.register('movies', MovieView)
+router.register('action', ActionMovieView)
+router.register('comedy', ComedyMovieView)
 
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
-]
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
